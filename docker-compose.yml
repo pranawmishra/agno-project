@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agno-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - sqlite_data:/app/data/tmp
+    # healthcheck:
+    #   test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+    #   interval: 15s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: agno-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+
+volumes:
+  sqlite_data:

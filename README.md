@@ -1,6 +1,6 @@
 # Agno Chat
 
-A multi-agent AI chat application built with [Agno](https://github.com/agno-ai/agno). A team of specialized agents routes user queries to the right expert — whether it's general questions, finance data, news, or SQL generation.
+A multi-agent AI chat application built with [Agno](https://www.agno.com/). A team of specialized agents routes user queries to the right expert — whether it's general questions, finance data, news, or SQL generation.
 
 ## What It Does
 

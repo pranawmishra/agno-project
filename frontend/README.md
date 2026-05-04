@@ -1,66 +1,65 @@
-# Agno Daily — Frontend
+# Agno Chat — Frontend
 
-An editorial, "newsroom after hours" interface for the Agno multi-agent
-backend in `../backend`. Each backend agent (`Base Agent`, `Finance Agent`,
-`News Agent`, `SQL Agent`) is presented as a "desk" of the newsroom; chat
-turns are styled as filed dispatches with bylines and tool citations.
+Next.js frontend for the Agno multi-agent chat application. Messages are routed through the backend team and responses are rendered with tool/agent attribution.
 
 ## Stack
 
-- Next.js 16 (App Router, Turbopack)
-- React 19, TypeScript
-- Tailwind CSS v4
-- Fonts: Fraunces (display), IBM Plex Sans (body), IBM Plex Mono (eyebrows)
+- **Next.js 16** (App Router, Turbopack)
+- **React 19**, TypeScript
+- **Tailwind CSS v4**
+- **Motion** — animations
 
-## Run
+## Prerequisites
+
+- Node.js 18+
+- Backend running on `http://localhost:8000` (see `../backend`)
+
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open `http://localhost:3000`.
 
-The backend must be running on `http://localhost:8000` (the FastAPI app in
-`../backend`). The frontend hits `POST /api/v1/chat` and `GET /health`.
-
-To point at a different backend, set:
+To point at a different backend:
 
 ```bash
 NEXT_PUBLIC_API_BASE=https://your-backend.example.com npm run dev
 ```
 
-## Endpoints used
+## Run with Docker
 
-| Method | Path             | Purpose                                  |
-| ------ | ---------------- | ---------------------------------------- |
-| GET    | `/health`        | Wire-status indicator in the masthead.   |
-| POST   | `/api/v1/chat`   | Submit a question, return a dispatch.    |
+```bash
+# from the project root
+docker compose up --build frontend
+```
 
-The request body is `{ message, user_id, session_id? }`; the response
-yields `{ content, session_id, run_id, team_tools[], member_tools[] }`,
-which the UI renders as filed prose plus "Sources cited" at the foot of
-each dispatch.
+## Backend endpoints used
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/health` | Connection status indicator |
+| `POST` | `/api/v1/chat` | Submit message, receive agent response |
 
 ## File map
 
 ```
 src/
   app/
-    layout.tsx        # Fonts + metadata
-    page.tsx          # Stateful chat page, routes turns through the API
-    globals.css       # Editorial design tokens, grain, drop-cap, prose
+    layout.tsx      # Fonts + metadata
+    page.tsx        # Stateful chat page, calls API
+    globals.css     # Design tokens, global styles
   components/
-    Masthead.tsx      # Title block, ticker, wire-status pill
-    DesksPanel.tsx    # Left rail listing the four agent "desks"
-    SessionPanel.tsx  # Right rail with session stats & desk traffic
-    EmptyState.tsx    # "Welcome to the wire" + wire-story exemplars
-    Composer.tsx      # Letters-to-the-Editor input
-    Pending.tsx       # Going-to-press loading state
-    Dispatch.tsx      # User & assistant turn renderers
+    Header.tsx      # App header / navigation
+    Dispatch.tsx    # Renders user & assistant turns
+    Composer.tsx    # Message input
+    EmptyState.tsx  # Welcome / placeholder state
+    Pending.tsx     # Loading state while agent responds
   lib/
-    api.ts            # postChat / getHealth
-    desks.ts          # Maps backend agents → newsroom desks
-    markdown.ts       # Tiny no-deps markdown → HTML
-    utils.ts          # IDs, dates, hashing
+    api.ts          # postChat / getHealth helpers
+    desks.ts        # Maps backend agents → UI labels
+    markdown.ts     # Lightweight markdown → HTML
+    utils.ts        # IDs, dates, hashing utilities
 ```

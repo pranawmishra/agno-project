@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Instrument_Serif, JetBrains_Mono, Playfair_Display, Crimson_Pro } from "next/font/google";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -24,6 +24,22 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+const cosmic = Playfair_Display({
+  variable: "--font-cosmic",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const cosmicBody = Crimson_Pro({
+  variable: "--font-cosmic-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Agno — A quiet multi-agent studio",
   description:
@@ -38,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${cosmic.variable} ${cosmicBody.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

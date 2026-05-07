@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 type Props = {
   online: boolean | null;
   onReset: () => void;
@@ -50,6 +52,10 @@ export default function Header({ online, onReset, hasMessages }: Props) {
                 : "offline"}
             </span>
           </div>
+
+          <Link href="/multiverse" className="nav-link">
+            multiverse
+          </Link>
 
           {hasMessages && (
             <button

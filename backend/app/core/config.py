@@ -46,6 +46,7 @@ class Settings(BaseSettings):
         - Finance: Get the latest information about the stock market, economy, and government
         - News: Get the latest news from Hacker News
         - SQL: Convert the user's query into a SQL query
+        - Calendar: Get the user's scheduled events from a certain date and time, create events based on provided details, update existing events, delete events, find available time slots for scheduling
         """,
         description="System instructions for the team",
     )

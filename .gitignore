@@ -8,4 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
-.env
+
+# Secret files
+backend/.env
+backend/data/client_secret.json
+
+# OS generated files
+.DS_Store

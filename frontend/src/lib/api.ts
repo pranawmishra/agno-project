@@ -46,3 +46,42 @@ export async function getHealth(): Promise<{ status: string; app: string }> {
   if (!res.ok) throw new Error("offline");
   return res.json();
 }
+
+export type MultiverseRequest = {
+  decision: string;
+  user_id: string;
+};
+
+export type MultiverseResponse = {
+  content: string;
+  session_id?: string | null;
+  run_id?: string | null;
+  member_names: string[];
+};
+
+export async function postMultiverse(
+  req: MultiverseRequest,
+  signal?: AbortSignal,
+): Promise<MultiverseResponse> {
+  const res = await fetch(`${API_BASE}/api/v1/multiverse`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+    signal,
+  });
+
+  if (!res.ok) {
+    let detail = "";
+    try {
+      const j = await res.json();
+      detail = j?.detail ?? JSON.stringify(j);
+    } catch {
+      detail = await res.text().catch(() => "");
+    }
+    throw new Error(
+      `Multiverse failed (${res.status})${detail ? `: ${detail}` : ""}`,
+    );
+  }
+
+  return (await res.json()) as MultiverseResponse;
+}

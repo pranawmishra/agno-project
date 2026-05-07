@@ -63,6 +63,7 @@ _UNIVERSE_CONFIGS: dict[str, dict[str, str]] = {
 
 
 def get_intake_agent() -> Agent:
+    """The Intake Agent is the first agent in the pipeline. It distils the user's decision into a single crisp, neutral third-person statement."""
     return Agent(
         name="Intake Agent",
         role="Distil the user's decision into a single crisp, neutral third-person statement",
@@ -78,6 +79,7 @@ def get_intake_agent() -> Agent:
 
 
 def get_universe_agent(universe_type: str) -> Agent:
+    """The Universe Agent is the second agent in the pipeline. It explores the parallel universes spawned by the user's decision."""
     cfg = _UNIVERSE_CONFIGS[universe_type]
     return Agent(
         name=cfg["name"],
@@ -88,6 +90,7 @@ def get_universe_agent(universe_type: str) -> Agent:
 
 
 def get_regret_agent() -> Agent:
+    """The Regret Quantification Agent is the third agent in the pipeline. It ranks the 5 universes from most to least devastating with dry, precise wit."""
     return Agent(
         name="Regret Quantification Agent",
         role="Rank the 5 universes from most to least devastating with dry, precise wit",
@@ -104,6 +107,7 @@ def get_regret_agent() -> Agent:
 
 
 def get_acceptance_agent() -> Agent:
+    """The Acceptance Agent is the last agent in the pipeline. It delivers the final compassionate-but-absurd sign-off that helps the user make peace."""
     return Agent(
         name="Acceptance Agent",
         role="Deliver the final compassionate-but-absurd sign-off that helps the user make peace",

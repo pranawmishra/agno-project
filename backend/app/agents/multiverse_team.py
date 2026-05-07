@@ -79,7 +79,7 @@ def _get_universe_sub_team() -> Team:
     return Team(
         name="Universe Explorers",
         role="Explore all five parallel timelines simultaneously and return all results",
-        mode=TeamMode.broadcast,
+        mode=TeamMode.coordinate,
         model=Groq(id=settings.agent_model_id, api_key=settings.groq_api_key),
         members=[
             get_universe_agent("best"),
